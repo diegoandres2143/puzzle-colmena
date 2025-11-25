@@ -12,7 +12,8 @@
 }
 
 body {
-    background: #0f1720;
+    background: url(fondo-2.jpg) no-repeat center/cover;
+    background-color: #0f1720;
     display: flex;
     justify-content: center;
     align-items: center; /* todo al centro */
@@ -33,7 +34,7 @@ h1 {
     font-size: 2rem;
     padding: 8px 16px;
     border-radius: 8px;
-    max-width: calc(100% - 40px);
+    width: 100%;
     text-align: center;
 }
 
@@ -71,22 +72,10 @@ h1 {
    CONTENEDOR FLOR HEXAGONAL 2-3-2
 ================================ */
 .hex-flower-grid {
-    display: flex;
-    flex-flow: row wrap;
-    align-items: center;
-    justify-content: flex-start;
-    width: 300px;
-    max-width: 100vw;
-    gap: 0;
-    margin: 60px auto;
-}
-
-/* Separador vacío para alineación tipo colmena */
-.hex-flower-grid .hex-spacer {
-    display: inline-block;
-    width: 50px;
-    height: 0;
-    flex-shrink: 0;
+    position: relative;
+    width: 236px;
+    height: 250px;
+    margin: 40px auto;
 }
 
 /* ================================
@@ -94,17 +83,20 @@ h1 {
 ================================ */
 /* Cada hex contenedor */
 .hex {
+    position: absolute;
     width: 100px;
     height: 100px;
     cursor: pointer;
-    flex-shrink: 0;
-    display: inline-block;
 }
 
-/* Posiciones precisas de cada hexágono */
-#hex-0, #hex-1, #hex-2, #hex-3, #hex-4, #hex-5, #hex-6 {
-    margin: -11px -3px;
-}
+/* Posiciones exactas de cada hexágono en la estructura 2-3-2 */
+#hex-0 { top: 0; left: 23px; }      /* Fila superior izquierda */
+#hex-1 { top: 0; left: 108px; }     /* Fila superior derecha */
+#hex-2 { top: 75px; left: -21px; }  /* Fila media izquierda */
+#hex-3 { top: 75px; left: 65px; }   /* Fila media centro */
+#hex-4 { top: 75px; left: 151px; }  /* Fila media derecha */
+#hex-5 { top: 150px; left: 23px; }  /* Fila inferior izquierda */
+#hex-6 { top: 150px; left: 108px; } /* Fila inferior derecha */
 
 /* ================================
    HEXÁGONOS - SVG Y FORMAS
