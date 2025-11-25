@@ -2,17 +2,17 @@
    CONFIGURACIÓN DEL HEXÁGONO
 ================================== */
 
-const HEX_CENTER_X = 100;
-const HEX_CENTER_Y = 100;
-const HEX_RADIUS = 86.6;
+const CENTRO_X_HEXAGONO = 100;
+const CENTRO_Y_HEXAGONO = 100;
+const RADIO_HEXAGONO = 86.6;
 
 // Generar vértices del hexágono regular (30° rotado para que apunte arriba)
 function generarVerticesHexagono() {
     const vertices = [];
     for (let i = 0; i < 6; i++) {
         const angulo = (Math.PI / 3) * i - Math.PI / 2; // -90° para que apunte arriba
-        const x = HEX_CENTER_X + HEX_RADIUS * Math.cos(angulo);
-        const y = HEX_CENTER_Y + HEX_RADIUS * Math.sin(angulo);
+        const x = CENTRO_X_HEXAGONO + RADIO_HEXAGONO * Math.cos(angulo);
+        const y = CENTRO_Y_HEXAGONO + RADIO_HEXAGONO * Math.sin(angulo);
         vertices.push([x, y]);
     }
     return vertices;
@@ -32,118 +32,14 @@ function generarPuntosMediosLados() {
     return medios;
 }
 
-const HEX_VERTICES = generarVerticesHexagono();
-const HEX_LADOS_MEDIOS = generarPuntosMediosLados();
+const VERTICES_HEXAGONO = generarVerticesHexagono();
+const PUNTOS_MEDIOS_LADOS = generarPuntosMediosLados();
 
 // Líneas llegan exactamente al punto medio del lado
-const LINE_REACH = 1.0;
-// Posición de la bolita
-const DOT_FACTOR = 0.75;
+const ALCANCE_LINEA = 1.0;
+// Posición de la bolita respecto a la longitud de la línea
+const FACTOR_BOLITA = 0.75;
 
-
-
-/* ================================
-   PLANTILLAS DE PUZZLES
-================================== */
-
-const PUZZLES = [
-    {
-        nombre: "Radial Total",
-        hexagonos: [
-            { lados: [1, 2, 3], rot: 0, bloqueado: false },       // 0: conecta con 3
-            { lados: [2, 3, 4], rot: 0, bloqueado: false },       // 1: conecta con 3
-            { lados: [0, 1, 2], rot: 0, bloqueado: false },       // 2: conecta con 3
-            { lados: [0, 1, 2, 3, 4, 5], rot: 0, bloqueado: false }, // 3: centro con todos
-            { lados: [3, 4, 5], rot: 0, bloqueado: false },       // 4: conecta con 3
-            { lados: [0, 1, 5], rot: 0, bloqueado: false },       // 5: conecta con 3
-            { lados: [0, 4, 5], rot: 0, bloqueado: false }        // 6: conecta con 3
-        ]
-    },
-    {
-        nombre: "Pirámides",
-        hexagonos: [
-            { lados: [2, 3], rot: 0, bloqueado: false }, // 0: garra conectada a 3
-            { lados: [2, 3], rot: 0, bloqueado: false },
-            { lados: [0, 1], rot: 0, bloqueado: false }, // 2: garra conectada a 3
-            { lados: [0, 1, 4, 5], rot: 0, bloqueado: false }, // 3: centro con 3 conexiones
-            { lados: [4, 5], rot: 0, bloqueado: false }, // 4: garra conectada a 3
-            { lados: [], rot: 0, bloqueado: true },
-            { lados: [], rot: 0, bloqueado: true }
-        ]
-    },
-    {
-        nombre: "Triángulo",
-        hexagonos: [
-            { lados: [], rot: 0, bloqueado: true },
-            { lados: [], rot: 0, bloqueado: true },
-            { lados: [], rot: 0, bloqueado: true },
-            { lados: [1, 2], rot: 0, bloqueado: false },   // 3: conecta con 4 y 6
-            { lados: [3, 4], rot: 0, bloqueado: false },      // 4: conecta con 3
-            { lados: [], rot: 0, bloqueado: true },
-            { lados: [0, 5], rot: 0, bloqueado: false }       // 6: conecta con 3
-        ]
-    },
-    {
-        nombre: "Árbol",
-        hexagonos: [
-            { lados: [2], rot: 0, bloqueado: false },      // 0: hoja conectada a 3
-            { lados: [3], rot: 0, bloqueado: false },      // 1: hoja conectada a 3
-            { lados: [], rot: 0, bloqueado: true },        // 2: bloqueado
-            { lados: [0, 2, 5], rot: 0, bloqueado: false },// 3: tronco con 3 ramas
-            { lados: [], rot: 0, bloqueado: true },        // 4: bloqueado
-            { lados: [], rot: 0, bloqueado: true },        // 5: bloqueado
-            { lados: [5], rot: 0, bloqueado: false }       // 6: hoja conectada a 3
-        ]
-    },
-    {
-        nombre: "Circuito",
-        hexagonos: [
-            { lados: [1, 2], rot: 0, bloqueado: false },   // 0: esquina conecta con 1 y 3
-            { lados: [3, 4], rot: 0, bloqueado: false },   // 1: esquina conecta con 0 y 3
-            { lados: [], rot: 0, bloqueado: true },
-            { lados: [0, 2, 3, 5], rot: 0, bloqueado: false },// 3: conecta con 0, 1 y 6
-            { lados: [], rot: 0, bloqueado: true },
-            { lados: [0, 1], rot: 0, bloqueado: false },
-            { lados: [4, 5], rot: 0, bloqueado: false }    // 6: esquina conecta con 3
-        ]
-    },
-    {
-        nombre: "Hexágono",
-        hexagonos: [
-            { lados: [1, 3], rot: 0, bloqueado: false },   // 0: conecta con 1 y 3
-            { lados: [2, 4], rot: 0, bloqueado: false },   // 1: conecta con 0 y 4
-            { lados: [0, 2], rot: 0, bloqueado: false },   // 2: conecta con 3
-            { lados: [], rot: 0, bloqueado: true },   // 3: conecta con 0 y 2
-            { lados: [3, 5], rot: 0, bloqueado: false },      // 4: conecta con 1
-            { lados: [1, 5], rot: 0, bloqueado: false },
-            { lados: [0, 4], rot: 0, bloqueado: false }
-        ]
-    },
-    {
-        nombre: "Triángulo Cortado",
-        hexagonos: [
-            { lados: [2,3], rot: 0, bloqueado: false },      // 0: arriba conecta con 3
-            { lados: [], rot: 0, bloqueado: true },
-            { lados: [0, 1, 2], rot: 0, bloqueado: false },      // 2: izquierda conecta con 3
-            { lados: [1, 4, 5], rot: 0, bloqueado: false },// 3: centro en cruz
-            { lados: [3, 4], rot: 0, bloqueado: false },      // 4: derecha conecta con 3
-            { lados: [1, 5], rot: 0, bloqueado: false },
-            { lados: [0, 4], rot: 0, bloqueado: false }       // 6: abajo conecta con 3
-        ]
-    },
-    {
-        nombre: "Infinito",
-        hexagonos: [
-            { lados: [1, 2], rot: 0, bloqueado: false },   // 0: conecta con 1 y 3
-            { lados: [2, 4], rot: 0, bloqueado: false },   // 1: conecta con 0 y 4
-            { lados: [1, 2], rot: 0, bloqueado: false },// 2: conecta con 3 y 5
-            { lados: [1, 2, 4, 5], rot: 0, bloqueado: false },// 3: conecta con 0, 2 y 6
-            { lados: [4, 5], rot: 0, bloqueado: false },   // 4: conecta con 1 y 6
-            { lados: [1, 5], rot: 0, bloqueado: false },   // 5: conecta con 2 y 3
-            { lados: [4, 5], rot: 0, bloqueado: false }    // 6: conecta con 3 y 4
-        ]
-    }
-];
 
 /* ================================
    FUNCIONES AUXILIARES
@@ -151,39 +47,43 @@ const PUZZLES = [
 
 // Generar el SVG del hexágono base
 function generarHexagonoSVG(id) {
-    const verticesStr = HEX_VERTICES.map(v => `${v[0].toFixed(1)},${v[1].toFixed(1)}`).join(' ');
+    const cadenaVertices = VERTICES_HEXAGONO.map(v => `${v[0].toFixed(1)},${v[1].toFixed(1)}`).join(' ');
     
     return `
-        <div class="hex" id="hex-${id}" data-rot="0">
-            <svg class="hex-svg" viewBox="0 0 200 200" preserveAspectRatio="xMidYMid meet">
-                <polygon class="hex-shape" points="${verticesStr}"/>
-                <g class="inner"></g>
+        <div class="hexagono" id="hexagono-${id}" data-rot="0">
+            <svg class="hexagono-svg" viewBox="0 0 200 200" preserveAspectRatio="xMidYMid meet">
+                <polygon class="forma-hexagono" points="${cadenaVertices}"/>
+                <g class="conexiones"></g>
             </svg>
         </div>
     `;
 }
 
+// ToDo: Estudiar a detalle esta función: Mapeo, Tofixed, Join
+
+// !
+
 function generarPalitos(lados) {
     // devuelve markup SVG con líneas y bolitas que apuntan al centro de los lados
-    return lados.map(idx => {
-        const [sideX, sideY] = HEX_LADOS_MEDIOS[idx];
+    return lados.map(indice => {
+        const [puntoMedioX, puntoMedioY] = PUNTOS_MEDIOS_LADOS[indice];
 
         // vector desde centro al punto medio del lado
-        const dx = sideX - HEX_CENTER_X;
-        const dy = sideY - HEX_CENTER_Y;
+        const deltaX = puntoMedioX - CENTRO_X_HEXAGONO;
+        const deltaY = puntoMedioY - CENTRO_Y_HEXAGONO;
 
-        // punto final real de la línea según LINE_REACH
-        const xEnd = HEX_CENTER_X + dx * LINE_REACH;
-        const yEnd = HEX_CENTER_Y + dy * LINE_REACH;
+        // punto final real de la línea según ALCANCE_LINEA
+        const xFinal = CENTRO_X_HEXAGONO + deltaX * ALCANCE_LINEA;
+        const yFinal = CENTRO_Y_HEXAGONO + deltaY * ALCANCE_LINEA;
 
         // bolita más cercana al centro para estética
-        const bx = HEX_CENTER_X + dx * DOT_FACTOR;
-        const by = HEX_CENTER_Y + dy * DOT_FACTOR;
+        const xBolita = CENTRO_X_HEXAGONO + deltaX * FACTOR_BOLITA;
+        const yBolita = CENTRO_Y_HEXAGONO + deltaY * FACTOR_BOLITA;
 
         // cada línea y su bolita
         return `
-            <line x1="${HEX_CENTER_X.toFixed(1)}" y1="${HEX_CENTER_Y.toFixed(1)}" x2="${xEnd.toFixed(1)}" y2="${yEnd.toFixed(1)}" />
-            <circle cx="${bx.toFixed(1)}" cy="${by.toFixed(1)}" r="3" />
+            <line x1="${CENTRO_X_HEXAGONO.toFixed(1)}" y1="${CENTRO_Y_HEXAGONO.toFixed(1)}" x2="${xFinal.toFixed(1)}" y2="${yFinal.toFixed(1)}" />
+            <circle cx="${xBolita.toFixed(1)}" cy="${yBolita.toFixed(1)}" r="3" />
         `;
     }).join('');
 }
@@ -193,7 +93,7 @@ function generarPalitos(lados) {
 ================================== */
 
 function generarEstructuraHexagonos() {
-    const grid = document.getElementById('hex-flower-grid');
+    const contenedor = document.getElementById('contenedor-hexagonos');
     
     // Generar los 7 hexágonos directamente
     let html = '';
@@ -201,7 +101,7 @@ function generarEstructuraHexagonos() {
         html += generarHexagonoSVG(i);
     }
     
-    grid.innerHTML = html;
+    contenedor.innerHTML = html;
 }
 
 /* ================================
@@ -209,50 +109,50 @@ function generarEstructuraHexagonos() {
 ================================== */
 
 // Índice del puzzle actual (comienza en 0)
-let puzzleActualIndex = 0;
+let indicePuzzleActual = 0;
 
 function inicializarPuzzle() {
     // Obtener el puzzle según el índice actual
-    const template = PUZZLES[puzzleActualIndex];
+    const plantilla = PUZZLES[indicePuzzleActual];
 
     // Mostrar nombre del template con su número
-    const templateDisplay = document.getElementById('template-name');
-    if (templateDisplay) {
-        templateDisplay.textContent = `Template ${puzzleActualIndex + 1}/${PUZZLES.length}: ${template.nombre}`;
+    const nombreTemplate = document.getElementById('nombre-template');
+    if (nombreTemplate) {
+        nombreTemplate.textContent = `Template ${indicePuzzleActual + 1}/${PUZZLES.length}: ${plantilla.nombre}`;
     }
     
     // Incrementar el índice para el siguiente puzzle (vuelve al inicio al llegar al final)
-    puzzleActualIndex = (puzzleActualIndex + 1) % PUZZLES.length;
+    indicePuzzleActual = (indicePuzzleActual + 1) % PUZZLES.length;
 
-    const hexes = document.querySelectorAll(".hex");
-    hexes.forEach((hex, i) => {
-        const tpl = template.hexagonos[i] || { lados: [], rot: 0, bloqueado: true };
-        const { lados, rot, bloqueado } = tpl;
+    const hexagonos = document.querySelectorAll(".hexagono");
+    hexagonos.forEach((hexagono, i) => {
+        const configuracion = plantilla.hexagonos[i] || { lados: [], rotacion: 0, bloqueado: true };
+        const { lados, rotacion, bloqueado } = configuracion;
 
         // metadata
-        hex.classList.remove("bloqueado");
-        hex.dataset.bloqueado = "false";
-        hex.dataset.rot = "0";
+        hexagono.classList.remove("bloqueado");
+        hexagono.dataset.bloqueado = "false";
+        hexagono.dataset.rot = "0";
 
-        const inner = hex.querySelector(".inner");
-        inner.innerHTML = ""; // limpiar
+        const conexiones = hexagono.querySelector(".conexiones");
+        conexiones.innerHTML = ""; // limpiar
 
         // Para SVG: aplicaremos transform con setAttribute. Usaremos el centro de tu SVG como pivote.
-        // También es importante garantizar que el elemento <g> exista y sea el lugar donde se dibujan palitos.
+        // También es importante garantizar que el elemento <g> exista y sea el lugar donde se dibujan las conexiones.
         if (bloqueado) {
-            hex.dataset.bloqueado = "true";
-            hex.classList.add("bloqueado");
-            hex.dataset.rot = rot.toString();
+            hexagono.dataset.bloqueado = "true";
+            hexagono.classList.add("bloqueado");
+            hexagono.dataset.rot = rotacion.toString();
 
-            // generar palitos (sin rotación adicional: la rotación base del bloque la dejamos aplicada)
-            inner.innerHTML = generarPalitos(lados);
-            inner.setAttribute('transform', `rotate(${rot * 60} ${HEX_CENTER_X} ${HEX_CENTER_Y})`);
+            // generar conexiones (sin rotación adicional: la rotación base del bloque la dejamos aplicada)
+            conexiones.innerHTML = generarPalitos(lados);
+            conexiones.setAttribute('transform', `rotate(${rotacion * 60} ${CENTRO_X_HEXAGONO} ${CENTRO_Y_HEXAGONO})`);
         } else {
             // Rotación aleatoria para el puzzle
-            const randomRot = Math.floor(Math.random() * 6);
-            hex.dataset.rot = randomRot.toString();
-            inner.innerHTML = generarPalitos(lados);
-            inner.setAttribute('transform', `rotate(${randomRot * 60} ${HEX_CENTER_X} ${HEX_CENTER_Y})`);
+            const rotacionAleatoria = Math.floor(Math.random() * 6);
+            hexagono.dataset.rot = rotacionAleatoria.toString();
+            conexiones.innerHTML = generarPalitos(lados);
+            conexiones.setAttribute('transform', `rotate(${rotacionAleatoria * 60} ${CENTRO_X_HEXAGONO} ${CENTRO_Y_HEXAGONO})`);
         }
     });
 }
@@ -262,25 +162,41 @@ function inicializarPuzzle() {
 ================================== */
 
 function verificarPuzzle() {
-    const hexes = document.querySelectorAll(".hex");
-    const template = PUZZLES[puzzleActualIndex === 0 ? PUZZLES.length - 1 : puzzleActualIndex - 1];
+    const hexagonos = document.querySelectorAll(".hexagono");
+    const plantilla = PUZZLES[indicePuzzleActual === 0 ? PUZZLES.length - 1 : indicePuzzleActual - 1];
 
     // Verificar que cada hexágono esté en su rotación correcta
-    for (let i = 0; i < hexes.length; i++) {
-        const hex = hexes[i];
-        const hexTemplate = template.hexagonos[i];
-        const rotacionActual = Number(hex.dataset.rot || 0);
+    for (let i = 0; i < hexagonos.length; i++) {
+        const hexagono = hexagonos[i];
+        const configuracionEsperada = plantilla.hexagonos[i];
+        const rotacionActual = Number(hexagono.dataset.rot || 0);
         
         // Saltar hexágonos bloqueados o vacíos
-        if (hexTemplate.bloqueado || hexTemplate.lados.length === 0) continue;
+        if (configuracionEsperada.bloqueado || configuracionEsperada.lados.length === 0) continue;
 
         // CASO ESPECIAL: Hexágono con 6 lados (simetría completa) - cualquier rotación es válida
-        if (hexTemplate.lados.length === 6) {
+        if (configuracionEsperada.lados.length === 6) {
             continue;
         }
 
+        // CASO ESPECIAL: Hexágono con 4 lados en patrón X (lados opuestos) - válido en 0° o 180°
+        // Patrón X puede ser: [0,2,3,5], [1,2,4,5] o [0,1,3,4] (3 orientaciones de cruz)
+        if (configuracionEsperada.lados.length === 4) {
+            // Convertir array a string para comparación simple
+            const patronLados = configuracionEsperada.lados.slice().sort((a, b) => a - b).join(',');
+            const patronesX = ['0,2,3,5', '1,2,4,5', '0,1,3,4'];
+            
+            if (patronesX.includes(patronLados)) {
+                // La X es válida en rotación original o girada 180° (espejo - reflejo simétrico)
+                const rotacionOpuesta = (configuracionEsperada.rotacion + 3) % 6;
+                if (rotacionActual === configuracionEsperada.rotacion || rotacionActual === rotacionOpuesta) {
+                    continue;
+                }
+            }
+        }
+
         // Verificar que la rotación sea exactamente la del template
-        if (rotacionActual !== hexTemplate.rot) {
+        if (rotacionActual !== configuracionEsperada.rotacion) {
             return false;
         }
     }
@@ -293,35 +209,35 @@ function verificarPuzzle() {
 ================================== */
 
 function configurarEventos() {
-    document.querySelectorAll('.hex').forEach(hex => {
-        hex.addEventListener('click', () => {
-            if (hex.dataset.bloqueado === "true") return;
+    document.querySelectorAll('.hexagono').forEach(hexagono => {
+        hexagono.addEventListener('click', () => {
+            if (hexagono.dataset.bloqueado === "true") return;
 
-            let rot = Number(hex.dataset.rot);
-            rot = (rot + 1) % 6;
-            hex.dataset.rot = rot.toString();
+            let rotacion = Number(hexagono.dataset.rot);
+            rotacion = (rotacion + 1) % 6;
+            hexagono.dataset.rot = rotacion.toString();
 
-            const inner = hex.querySelector('.inner');
-            inner.setAttribute('transform', `rotate(${rot * 60} ${HEX_CENTER_X} ${HEX_CENTER_Y})`);
+            const conexiones = hexagono.querySelector('.conexiones');
+            conexiones.setAttribute('transform', `rotate(${rotacion * 60} ${CENTRO_X_HEXAGONO} ${CENTRO_Y_HEXAGONO})`);
         });
     });
 }
 
-const btnRandomize = document.getElementById('randomize-btn');
-if (btnRandomize) {
-    btnRandomize.addEventListener('click', inicializarPuzzle);
+const btnNuevoPuzzle = document.getElementById('btn-nuevo-puzzle');
+if (btnNuevoPuzzle) {
+    btnNuevoPuzzle.addEventListener('click', inicializarPuzzle);
 }
 
-const btnVerify = document.getElementById('verify-btn');
-if (btnVerify) {
-    btnVerify.addEventListener('click', () => {
+const btnVerificar = document.getElementById('btn-verificar');
+if (btnVerificar) {
+    btnVerificar.addEventListener('click', () => {
         if (verificarPuzzle()) {
             mostrarExito();
         } else {
-            // Efecto de shake en hexágonos incorrectos
-            document.querySelectorAll('.hex').forEach(hex => {
+            // Efecto de sacudida en hexágonos incorrectos
+            document.querySelectorAll('.hexagono').forEach(hex => {
                 if (hex.dataset.bloqueado !== "true") {
-                    hex.style.animation = 'shake 0.3s ease-in-out';
+                    hex.style.animation = 'sacudir 0.3s ease-in-out';
                     setTimeout(() => {
                         hex.style.animation = '';
                     }, 300);
@@ -336,16 +252,16 @@ if (btnVerify) {
 ================================== */
 
 function mostrarExito() {
-    const hexes = document.querySelectorAll('.hex');
+    const hexagonos = document.querySelectorAll('.hexagono');
     
     // Añadir animación de éxito a todos los hexágonos
-    hexes.forEach((hex, i) => {
+    hexagonos.forEach((hexagono, indice) => {
         setTimeout(() => {
-            hex.classList.add('success');
+            hexagono.classList.add('exito');
             setTimeout(() => {
-                hex.classList.remove('success');
+                hexagono.classList.remove('exito');
             }, 1200);
-        }, i * 50);
+        }, indice * 50);
     });
 }
 
