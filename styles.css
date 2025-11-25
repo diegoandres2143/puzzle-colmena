@@ -1,0 +1,233 @@
+/* ================================
+   RESET Y BASE
+================================ */
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    user-select: none; /* Desactiva la selección de texto en todo */
+    -webkit-user-select: none; /* Safari */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE/Edge */
+}
+
+body {
+    background: #0f1720;
+    display: flex;
+    justify-content: center;
+    align-items: center; /* todo al centro */
+    height: 100vh;
+    width: 100vw;
+    font-family: sans-serif;
+    position: relative;  /* necesario para posicionar el h1 */
+    color: #e6fbff;
+}
+
+h1 {
+    position: absolute;  /* lo sacamos del flujo normal */
+    top: 20px;           /* lo pegamos arriba */
+    left: 50%;
+    transform: translateX(-50%); /* centrado horizontal */
+    color: #00eaff;
+    background-color: rgba(0, 234, 255, 0.08);
+    font-size: 2rem;
+    padding: 8px 16px;
+    border-radius: 8px;
+    max-width: calc(100% - 40px);
+    text-align: center;
+}
+
+/* Mostrar nombre del template */
+.template-display, #template-name {
+    color: #00eaff;
+    background-color: rgba(0, 234, 255, 0.06);
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+    border: 1px solid rgba(0, 234, 255, 0.06);
+    backdrop-filter: blur(2px);
+}
+
+/* ================================
+   LAYOUT PRINCIPAL
+================================ */
+
+.main-column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 70%;
+    width: 100%;
+    gap: 12px;
+    padding-top: 40px;
+}
+
+/* ================================
+   CONTENEDOR FLOR HEXAGONAL 2-3-2
+================================ */
+.hex-flower-grid {
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    justify-content: flex-start;
+    width: 300px;
+    max-width: 100vw;
+    gap: 0;
+    margin: 60px auto;
+}
+
+/* Separador vacío para alineación tipo colmena */
+.hex-flower-grid .hex-spacer {
+    display: inline-block;
+    width: 50px;
+    height: 0;
+    flex-shrink: 0;
+}
+
+/* ================================
+   HEXÁGONOS - TAMAÑO Y POSICIÓN
+================================ */
+/* Cada hex contenedor */
+.hex {
+    width: 100px;
+    height: 100px;
+    cursor: pointer;
+    flex-shrink: 0;
+    display: inline-block;
+}
+
+/* Posiciones precisas de cada hexágono */
+#hex-0, #hex-1, #hex-2, #hex-3, #hex-4, #hex-5, #hex-6 {
+    margin: -11px -3px;
+}
+
+/* ================================
+   HEXÁGONOS - SVG Y FORMAS
+================================ */
+/* El SVG completo */
+.hex-svg {
+    width: 100%;
+    height: 100%;
+    filter: drop-shadow(0 0 10px #00eaff55);
+}
+
+/* Borde hexagonal */
+.hex-shape {
+    fill: #101820;
+    stroke: #00eaff;
+    stroke-width: 2;
+}
+
+/* Palitos internos (líneas y bolitas) */
+.inner {
+    transition: transform 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.inner line {
+    stroke: #00eaff;
+    stroke-width: 3;
+    stroke-linecap: round;
+    transition: stroke 0.2s ease;
+}
+
+.inner circle {
+    fill: #00eaff;
+    transition: fill 0.2s ease;
+}
+
+/* Hover estilo Warframe */
+.hex:hover .inner line {
+    stroke: #00ffd5;
+}
+
+.hex:hover .inner circle {
+    fill: #00ffd5;
+}
+
+/* Hexágono bloqueado */
+.hex.bloqueado {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.hex.bloqueado .hex-shape {
+    fill: #1a2530;
+    stroke: #00eaff33;
+}
+
+.hex.bloqueado .inner line {
+    stroke: #00eaff66;
+}
+
+.hex.bloqueado .inner circle {
+    fill: #00eaff66;
+}
+
+/* Animación de éxito */
+@keyframes hex-success-pulse {
+    0%, 100% { 
+        filter: drop-shadow(0 0 10px #00eaff55);
+    }
+    50% { 
+        filter: drop-shadow(0 0 30px #00eaff) drop-shadow(0 0 40px #00ffd5);
+    }
+}
+
+.hex.success {
+    animation: hex-success-pulse 0.6s ease-in-out 2;
+}
+
+.hex.success .hex-shape {
+    stroke: #00ffd5;
+    stroke-width: 6;
+}
+
+/* ================================
+   BOTÓN
+================================ */
+.button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+}
+
+#randomize-btn, #verify-btn {
+    background: linear-gradient(135deg, #00eaff, #0088cc);
+    color: #0f1720;
+    border: none;
+    padding: 10px 22px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.22s ease;
+    box-shadow: 0 4px 15px rgba(0, 234, 255, 0.22);
+}
+
+#randomize-btn:hover, #verify-btn:hover {
+    background: linear-gradient(135deg, #00ffd5, #00eaff);
+    box-shadow: 0 6px 25px rgba(0, 234, 255, 0.4);
+    transform: translateY(-2px);
+}
+
+#randomize-btn:active, #verify-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 10px rgba(0, 234, 255, 0.18);
+}
+
+/* ================================
+   ANIMACIONES
+================================ */
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+}
