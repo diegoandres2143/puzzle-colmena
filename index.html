@@ -5,27 +5,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Puzzle de Hexágonos</title>
     <link rel="stylesheet" href="styles.css" />
-    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="icon" type="image/png" href="./img/favicon.png">
     
 </head>
 <body>
 
-<div class="main-column">
+<div id="columna-principal">
     <h1>Cifrado Colmena</h1>
 
     <!-- Nombre del template -->
-    <div id="template-name" class="template-display">Template: —</div>
+    <div id="nombre-template">Template: —</div>
 
-    <div class="hex-flower-grid" id="hex-flower-grid">
+    <div id="contenedor-hexagonos">
         <!-- Los hexágonos se generarán dinámicamente con JS -->
     </div>
 
-    <div class="button-container">
-        <button id="randomize-btn">Generar nuevo puzzle</button>
-        <button id="verify-btn">Verificar</button>
+    <div id="contenedor-botones">
+        <button id="btn-nuevo-puzzle">Generar nuevo puzzle</button>
+        <button id="btn-verificar">Verificar</button>
     </div>
 </div>
 
+<script src="puzzles.js"></script>
 <script src="app.js"></script>
 </body>
 </html>
