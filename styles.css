@@ -9,7 +9,7 @@
 }
 
 body {
-    background: url(./img/fondo-2.jpg) no-repeat center/cover;
+    background: url(fondo-2.jpg) no-repeat center/cover;
     background-color: #0f1720;
     display: flex;
     justify-content: center;
@@ -225,3 +225,4 @@ h1 {
     stroke: #00ffd5;
     stroke-width: 6;
 }
+
