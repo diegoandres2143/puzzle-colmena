@@ -30,12 +30,14 @@ h1 {
     left: 50%;
     transform: translateX(-50%); /* centrado horizontal */
     color: #00eaff;
-    background-color: rgba(0, 234, 255, 0.08);
+    background-color: rgba(0, 37, 92, 0.493);
     font-size: 2rem;
     padding: 8px 16px;
     border-radius: 8px;
     width: 100%;
     text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 2px;
 }
 
 /* Mostrar nombre del template */
@@ -112,7 +114,7 @@ h1 {
 .hex-shape {
     fill: #101820;
     stroke: #00eaff;
-    stroke-width: 2;
+    stroke-width: 4;
 }
 
 /* Palitos internos (líneas y bolitas) */
