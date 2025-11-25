@@ -195,23 +195,11 @@ function generarPalitos(lados) {
 function generarEstructuraHexagonos() {
     const grid = document.getElementById('hex-flower-grid');
     
-    // Estructura 2-3-2
-    const estructura = [
-        ['spacer', 0, 1, 'spacer'],
-        [2, 3, 4],
-        ['spacer', 5, 6, 'spacer']
-    ];
-    
+    // Generar los 7 hexágonos directamente
     let html = '';
-    estructura.forEach(fila => {
-        fila.forEach(item => {
-            if (item === 'spacer') {
-                html += '<span class="hex-spacer"></span>';
-            } else {
-                html += generarHexagonoSVG(item);
-            }
-        });
-    });
+    for (let i = 0; i < 7; i++) {
+        html += generarHexagonoSVG(i);
+    }
     
     grid.innerHTML = html;
 }
@@ -359,11 +347,6 @@ function mostrarExito() {
             }, 1200);
         }, i * 50);
     });
-    
-    // Mensaje después de la animación
-    setTimeout(() => {
-        console.log("✅ ¡CIFRADOR COMPLETADO!");
-    }, 1000);
 }
 
 /* ================================
