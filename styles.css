@@ -1,6 +1,3 @@
-/* ================================
-   RESET Y BASE
-================================ */
 * {
     padding: 0;
     margin: 0;
@@ -12,7 +9,7 @@
 }
 
 body {
-    background: url(fondo-2.jpg) no-repeat center/cover;
+    background: url(./img/fondo-2.jpg) no-repeat center/cover;
     background-color: #0f1720;
     display: flex;
     justify-content: center;
@@ -41,7 +38,7 @@ h1 {
 }
 
 /* Mostrar nombre del template */
-.template-display, #template-name {
+#nombre-template {
     color: #00eaff;
     background-color: rgba(0, 234, 255, 0.06);
     padding: 6px 12px;
@@ -53,38 +50,31 @@ h1 {
     margin-bottom: 10px;
     border: 1px solid rgba(0, 234, 255, 0.06);
     backdrop-filter: blur(2px);
+    text-align: center;
 }
 
-/* ================================
-   LAYOUT PRINCIPAL
-================================ */
-
-.main-column {
-    display: flex;
+/* Layout principal */
+#columna-principal {
+    /* display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 70%;
+    height: 70%; */
     width: 100%;
-    gap: 12px;
+    /* gap: 12px; */
     padding-top: 40px;
 }
 
-/* ================================
-   CONTENEDOR FLOR HEXAGONAL 2-3-2
-================================ */
-.hex-flower-grid {
+/* Div divs de Hexágono */
+#contenedor-hexagonos {
     position: relative;
     width: 236px;
     height: 250px;
     margin: 40px auto;
 }
 
-/* ================================
-   HEXÁGONOS - TAMAÑO Y POSICIÓN
-================================ */
-/* Cada hex contenedor */
-.hex {
+/* Cada contenedor de hexágono individual*/
+.hexagono {
     position: absolute;
     width: 100px;
     height: 100px;
@@ -92,106 +82,90 @@ h1 {
 }
 
 /* Posiciones exactas de cada hexágono en la estructura 2-3-2 */
-#hex-0 { top: 0; left: 23px; }      /* Fila superior izquierda */
-#hex-1 { top: 0; left: 108px; }     /* Fila superior derecha */
-#hex-2 { top: 75px; left: -21px; }  /* Fila media izquierda */
-#hex-3 { top: 75px; left: 65px; }   /* Fila media centro */
-#hex-4 { top: 75px; left: 151px; }  /* Fila media derecha */
-#hex-5 { top: 150px; left: 23px; }  /* Fila inferior izquierda */
-#hex-6 { top: 150px; left: 108px; } /* Fila inferior derecha */
+#hexagono-0 { top: 0; left: 23px; }      /* Fila superior izquierda */
+#hexagono-1 { top: 0; left: 108px; }     /* Fila superior derecha */
+#hexagono-2 { top: 75px; left: -21px; }  /* Fila media izquierda */
+#hexagono-3 { top: 75px; left: 65px; }   /* Fila media centro */
+#hexagono-4 { top: 75px; left: 151px; }  /* Fila media derecha */
+#hexagono-5 { top: 150px; left: 23px; }  /* Fila inferior izquierda */
+#hexagono-6 { top: 150px; left: 108px; } /* Fila inferior derecha */
 
-/* ================================
-   HEXÁGONOS - SVG Y FORMAS
-================================ */
+
 /* El SVG completo */
-.hex-svg {
+.hexagono-svg {
     width: 100%;
     height: 100%;
     filter: drop-shadow(0 0 10px #00eaff55);
 }
 
 /* Borde hexagonal */
-.hex-shape {
+.forma-hexagono {
     fill: #101820;
-    stroke: #00eaff;
+    stroke: #00eaff; /* Lado */
     stroke-width: 4;
 }
 
-/* Palitos internos (líneas y bolitas) */
-.inner {
-    transition: transform 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+/* Conexiones internas (líneas y bolitas) */
+
+/* Animación cuando se le da click a un Hexagono */
+
+.conexiones {
+    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.inner line {
+.conexiones line {
     stroke: #00eaff;
     stroke-width: 3;
     stroke-linecap: round;
     transition: stroke 0.2s ease;
 }
 
-.inner circle {
-    fill: #00eaff;
+.conexiones circle {
+    fill: #6cecf8;
     transition: fill 0.2s ease;
 }
 
 /* Hover estilo Warframe */
-.hex:hover .inner line {
-    stroke: #00ffd5;
+.hexagono:hover .conexiones line {
+    stroke: #0051ff;
+    stroke-width: 3.5;
 }
 
-.hex:hover .inner circle {
-    fill: #00ffd5;
+.hexagono:hover .conexiones circle {
+    fill: #ffffff;
 }
 
 /* Hexágono bloqueado */
-.hex.bloqueado {
+.hexagono.bloqueado {
     opacity: 0.4;
     cursor: not-allowed;
 }
 
-.hex.bloqueado .hex-shape {
+.hexagono.bloqueado .forma-hexagono {
     fill: #1a2530;
     stroke: #00eaff33;
 }
 
-.hex.bloqueado .inner line {
+.hexagono.bloqueado .conexiones line {
     stroke: #00eaff66;
 }
 
-.hex.bloqueado .inner circle {
+.hexagono.bloqueado .conexiones circle {
     fill: #00eaff66;
 }
 
-/* Animación de éxito */
-@keyframes hex-success-pulse {
-    0%, 100% { 
-        filter: drop-shadow(0 0 10px #00eaff55);
-    }
-    50% { 
-        filter: drop-shadow(0 0 30px #00eaff) drop-shadow(0 0 40px #00ffd5);
-    }
-}
 
-.hex.success {
-    animation: hex-success-pulse 0.6s ease-in-out 2;
-}
+/* Botones */
 
-.hex.success .hex-shape {
-    stroke: #00ffd5;
-    stroke-width: 6;
-}
-
-/* ================================
-   BOTÓN
-================================ */
-.button-container {
+#contenedor-botones {
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 12px;
+    flex-flow: row wrap;
 }
 
-#randomize-btn, #verify-btn {
+#btn-nuevo-puzzle, #btn-verificar {
     background: linear-gradient(135deg, #00eaff, #0088cc);
     color: #0f1720;
     border: none;
@@ -206,22 +180,48 @@ h1 {
     box-shadow: 0 4px 15px rgba(0, 234, 255, 0.22);
 }
 
-#randomize-btn:hover, #verify-btn:hover {
+#btn-nuevo-puzzle:hover, #btn-verificar:hover {
     background: linear-gradient(135deg, #00ffd5, #00eaff);
     box-shadow: 0 6px 25px rgba(0, 234, 255, 0.4);
     transform: translateY(-2px);
 }
 
-#randomize-btn:active, #verify-btn:active {
+#btn-nuevo-puzzle:active, #btn-verificar:active {
     transform: translateY(0);
     box-shadow: 0 2px 10px rgba(0, 234, 255, 0.18);
 }
 
-/* ================================
-   ANIMACIONES
-================================ */
-@keyframes shake {
+/* Animaciones */
+
+/* Animación de error */
+@keyframes sacudir {
     0%, 100% { transform: translateX(0); }
     25% { transform: translateX(-5px); }
     75% { transform: translateX(5px); }
+}
+
+/* Animación de éxito */
+@keyframes pulso-exito {
+    0%, 100% { 
+        filter: drop-shadow(0 0 10px #00eaff55);
+    } 
+
+    /* Frame inicial y final */
+
+    50% { 
+        filter: drop-shadow(0 0 30px #00eaff);
+    }
+
+    /* Frame medio */
+}
+
+.hexagono.exito {
+    animation: pulso-exito 0.6s ease-in-out 2;
+    /* Llama al keyFrame que hicimos y dice que ejecute el key frame en 0.6 segundos primero 
+    rápido, luego lento, y lo haga 2 veces, duración final 1.2 Segundos */
+}
+
+.hexagono.exito .forma-hexagono {
+    stroke: #00ffd5;
+    stroke-width: 6;
 }
