@@ -55,13 +55,7 @@ h1 {
 
 /* Layout principal */
 #columna-principal {
-    /* display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 70%; */
     width: 100%;
-    /* gap: 12px; */
     padding-top: 40px;
 }
 
@@ -90,7 +84,9 @@ h1 {
 #hexagono-5 { top: 150px; left: 23px; }  /* Fila inferior izquierda */
 #hexagono-6 { top: 150px; left: 108px; } /* Fila inferior derecha */
 
-
+/* svg {
+    width: 100px;
+} */
 /* El SVG completo */
 .hexagono-svg {
     width: 100%;
@@ -100,8 +96,8 @@ h1 {
 
 /* Borde hexagonal */
 .forma-hexagono {
-    fill: #101820;
-    stroke: #00eaff; /* Lado */
+    fill: #0000008a;
+    stroke: #00eaff5e; /* Lado */
     stroke-width: 4;
 }
 

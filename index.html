@@ -1,33 +1,64 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Puzzle de Hexágonos</title>
     <link rel="stylesheet" href="styles.css" />
     <link rel="icon" type="image/png" href="favicon.png">
-    
+
 </head>
+
 <body>
 
-<div id="columna-principal">
-    <h1>Cifrado Colmena</h1>
+    <div id="columna-principal">
+        <h1>Cifrado Colmena</h1>
+        <div id="nombre-template">Template: —</div>
+        <div>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" preserveAspectRatio="xMidYMid meet">
+                <!-- Polígono exterior -->
+                <polygon id="hexagono-exterior" fill="rgba(0, 0, 0, 0.54)" stroke="rgba(0, 234, 255, 0.37)"
+                    stroke-width="4" points="100.0,13.4 175.0,56.7 175.0,143.3 100.0,186.6 25.0,143.3 25.0,56.7" />
 
-    <!-- Nombre del template -->
-    <div id="nombre-template">Template: —</div>
+                <!-- Hexágono inscrito -->
+                <polygon id="hexagono-inscrito" fill="rgba(0, 234, 255, 0.07)" stroke="rgba(0, 234, 255, 0.15)"
+                    stroke-width="3" points="100.0,35.1 156.3,67.5 156.3,132.5 100.0,165.0 43.8,132.5 43.8,67.5" />
 
-    <div id="contenedor-hexagonos">
-        <!-- Los hexágonos se generarán dinámicamente con JS -->
-    </div>
+                <!-- Grupo de conexiones (se puede rotar) -->
+                <g class="lineaPuntoGrupo">
+                    <!-- Cada línea tiene su propia clase y el círculo también -->
+                    <line class="activa linea-0" x1="100.0" y1="100.0" x2="137.5" y2="35.1" />
+                    <circle class="activa circulo-0" cx="128.1" cy="51.3" r="3" />
 
-    <div id="contenedor-botones">
+                    <line class="activa linea-1" x1="100.0" y1="100.0" x2="175.0" y2="100.0" />
+                    <circle class="activa circulo-1" cx="156.3" cy="100.0" r="3" />
+
+                    <line class="activa linea-2" x1="100.0" y1="100.0" x2="137.5" y2="165.0" />
+                    <circle class="activa circulo-2" cx="128.1" cy="148.8" r="3" />
+
+                    <line class="activa linea-3" x1="100.0" y1="100.0" x2="62.5" y2="165.0" />
+                    <circle class="activa circulo-3" cx="71.9" cy="148.8" r="3" />
+
+                    <line class="activa linea-4" x1="100.0" y1="100.0" x2="25.0" y2="100.0" />
+                    <circle class="activa circulo-4" cx="43.8" cy="100.0" r="3" />
+
+                    <line class="activa linea-5" x1="100.0" y1="100.0" x2="62.5" y2="35.1" />
+                    <circle class="activa circulo-5" cx="71.9" cy="51.3" r="3" />
+
+                    <!-- Círculo central -->
+                    <circle class="activa" cx="100" cy="100" r="3" />
+                </g>
+            </svg>
+
+        </div>
         <button id="btn-nuevo-puzzle">Generar nuevo puzzle</button>
         <button id="btn-verificar">Verificar</button>
     </div>
-</div>
+    </div>
 
-<script src="puzzles.js"></script>
-<script src="app.js"></script>
+    <script src="puzzles.js"></script>
+    <script src="app.js"></script>
 </body>
-</html>
 
+</html>

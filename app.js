@@ -1,51 +1,3 @@
-/* ================================
-   CONFIGURACIÓN DEL HEXÁGONO
-================================== */
-
-const CENTRO_X_HEXAGONO = 100;
-const CENTRO_Y_HEXAGONO = 100;
-const RADIO_HEXAGONO = 86.6;
-
-// Generar vértices del hexágono regular (30° rotado para que apunte arriba)
-function generarVerticesHexagono() {
-    const vertices = [];
-    for (let i = 0; i < 6; i++) {
-        const angulo = (Math.PI / 3) * i - Math.PI / 2; // -90° para que apunte arriba
-        const x = CENTRO_X_HEXAGONO + RADIO_HEXAGONO * Math.cos(angulo);
-        const y = CENTRO_Y_HEXAGONO + RADIO_HEXAGONO * Math.sin(angulo);
-        vertices.push([x, y]);
-    }
-    return vertices;
-}
-
-// Generar puntos medios de los lados del hexágono
-function generarPuntosMediosLados() {
-    const vertices = generarVerticesHexagono();
-    const medios = [];
-    for (let i = 0; i < 6; i++) {
-        const v1 = vertices[i];
-        const v2 = vertices[(i + 1) % 6];
-        const mx = (v1[0] + v2[0]) / 2;
-        const my = (v1[1] + v2[1]) / 2;
-        medios.push([mx, my]);
-    }
-    return medios;
-}
-
-const VERTICES_HEXAGONO = generarVerticesHexagono();
-const PUNTOS_MEDIOS_LADOS = generarPuntosMediosLados();
-
-// Líneas llegan exactamente al punto medio del lado
-const ALCANCE_LINEA = 1.0;
-// Posición de la bolita respecto a la longitud de la línea
-const FACTOR_BOLITA = 0.75;
-
-
-/* ================================
-   FUNCIONES AUXILIARES
-================================== */
-
-// Generar el SVG del hexágono base
 function generarHexagonoSVG(id) {
     const cadenaVertices = VERTICES_HEXAGONO.map(v => `${v[0].toFixed(1)},${v[1].toFixed(1)}`).join(' ');
     
@@ -59,39 +11,6 @@ function generarHexagonoSVG(id) {
     `;
 }
 
-// ToDo: Estudiar a detalle esta función: Mapeo, Tofixed, Join
-
-// !
-
-function generarPalitos(lados) {
-    // devuelve markup SVG con líneas y bolitas que apuntan al centro de los lados
-    return lados.map(indice => {
-        const [puntoMedioX, puntoMedioY] = PUNTOS_MEDIOS_LADOS[indice];
-
-        // vector desde centro al punto medio del lado
-        const deltaX = puntoMedioX - CENTRO_X_HEXAGONO;
-        const deltaY = puntoMedioY - CENTRO_Y_HEXAGONO;
-
-        // punto final real de la línea según ALCANCE_LINEA
-        const xFinal = CENTRO_X_HEXAGONO + deltaX * ALCANCE_LINEA;
-        const yFinal = CENTRO_Y_HEXAGONO + deltaY * ALCANCE_LINEA;
-
-        // bolita más cercana al centro para estética
-        const xBolita = CENTRO_X_HEXAGONO + deltaX * FACTOR_BOLITA;
-        const yBolita = CENTRO_Y_HEXAGONO + deltaY * FACTOR_BOLITA;
-
-        // cada línea y su bolita
-        return `
-            <line x1="${CENTRO_X_HEXAGONO.toFixed(1)}" y1="${CENTRO_Y_HEXAGONO.toFixed(1)}" x2="${xFinal.toFixed(1)}" y2="${yFinal.toFixed(1)}" />
-            <circle cx="${xBolita.toFixed(1)}" cy="${yBolita.toFixed(1)}" r="3" />
-        `;
-    }).join('');
-}
-
-/* ================================
-   GENERAR ESTRUCTURA HTML
-================================== */
-
 function generarEstructuraHexagonos() {
     const contenedor = document.getElementById('contenedor-hexagonos');
     
@@ -104,9 +23,6 @@ function generarEstructuraHexagonos() {
     contenedor.innerHTML = html;
 }
 
-/* ================================
-   INICIALIZAR PUZZLE
-================================== */
 
 // Índice del puzzle actual (comienza en 0)
 let indicePuzzleActual = 0;

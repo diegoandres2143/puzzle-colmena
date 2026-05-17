@@ -1,5 +1,3 @@
-// Plantilla de Puzzles
-
 const PUZZLES = [
     {
         nombre: "Radial Total",

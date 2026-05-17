@@ -1,0 +1,11 @@
+.lineaPuntoGrupo {
+    stroke: #00eaff30;
+    stroke-width: 3;
+    fill: #2e777e;
+}
+
+.lineaPuntoGrupo .activa {
+    stroke: #00eaff;
+    stroke-width: 3;
+    fill: #6cecf8;
+}
